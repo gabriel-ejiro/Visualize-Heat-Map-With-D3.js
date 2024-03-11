@@ -6,7 +6,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     })
     .catch(error => console.error('Error fetching data:', error));
 
-// Assuming you have an SVG container named 'svg' and your data is stored in the variable 'data'
+// user story 3, 4, 5
 
 // Define dimensions for your SVG container
 const width = 800;
