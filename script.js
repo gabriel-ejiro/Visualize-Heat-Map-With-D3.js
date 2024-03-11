@@ -49,3 +49,27 @@ svg.selectAll(".cell")
   .attr("width", cellWidth) // Define width of each cell
   .attr("height", cellHeight) // Define height of each cell
   .style("fill", (d) => colorScale(d.value)); // Fill color based on data
+
+
+// user story 6, 7, 8
+
+// Define scales and colors
+// Replace these with your actual scales and colors
+const colorScale = d3.scaleSequential()
+  .domain([0, d3.max(data, d => d.value)])
+  .interpolator(d3.interpolateViridis);
+
+// Create cells (rect elements) to represent the data
+svg.selectAll(".cell")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("class", "cell")
+  .attr("x", (d) => xScale(d.xValue)) // Adjust x-coordinate based on data
+  .attr("y", (d) => yScale(d.yValue)) // Adjust y-coordinate based on data
+  .attr("width", cellWidth) // Define width of each cell
+  .attr("height", cellHeight) // Define height of each cell
+  .style("fill", (d) => colorScale(d.value)) // Fill color based on data
+  .attr("data-month", (d) => d.month) // Add data-month property
+  .attr("data-year", (d) => d.year) // Add data-year property
+  .attr("data-temp", (d) => d.value); // Add data-temp property
