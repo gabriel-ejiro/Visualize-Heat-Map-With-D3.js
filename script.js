@@ -153,3 +153,40 @@ legend.selectAll("text")
   .attr("dy", "0.35em")
   .text(d => d);
 
+
+// user story 15, 16, 17
+// Define the tooltip
+const tooltip = d3.select("body").append("div")
+  .attr("id", "tooltip")
+  .style("opacity", 0);
+
+// Append rect elements to the legend with at least 4 different fill colors
+const legendColors = ["#ffffcc", "#c2e699", "#78c679", "#238443", "#004529"]; // Add more colors as needed
+legend.selectAll(".legend-item")
+  .data(legendData)
+  .enter()
+  .append("rect")
+  .attr("class", "legend-item")
+  .attr("x", 0)
+  .attr("y", (d, i) => i * 20)
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", (d, i) => legendColors[i]);
+
+// Add mouseover event listeners to cells for tooltip display
+svg.selectAll(".cell")
+  .on("mouseover", (event, d) => {
+    tooltip.transition()
+      .duration(200)
+      .style("opacity", 0.9);
+    tooltip.html(`Year: ${d.year}<br>Month: ${d.month}<br>Temperature: ${d.value.toFixed(2)}`)
+      .attr("data-year", d.year)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => {
+    tooltip.transition()
+      .duration(500)
+      .style("opacity", 0);
+  });
+
