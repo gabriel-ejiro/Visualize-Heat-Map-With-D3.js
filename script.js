@@ -73,3 +73,31 @@ svg.selectAll(".cell")
   .attr("data-month", (d) => d.month) // Add data-month property
   .attr("data-year", (d) => d.year) // Add data-year property
   .attr("data-temp", (d) => d.value); // Add data-temp property
+
+
+// Define y-axis scale and axis generator
+const yScale = d3.scaleBand()
+  .domain(months.map(d => d.month)) // Assuming 'months' is an array containing month names
+  .range([0, height - margin.bottom]); // Adjust range as needed
+
+const yAxis = d3.axisLeft(yScale)
+  .tickFormat(d => months.find(month => month.month === d).name); // Format ticks with full month name
+
+// Append y-axis to the SVG
+svg.append("g")
+  .attr("id", "y-axis")
+  .attr("transform", `translate(${margin.left}, 0)`) // Adjust positioning as needed
+  .call(yAxis);
+
+// Define x-axis scale and axis generator
+const xScale = d3.scaleBand()
+  .domain(years) // Assuming 'years' is an array containing all years
+  .range([margin.left, width - margin.right]); // Adjust range as needed
+
+const xAxis = d3.axisBottom(xScale);
+
+// Append x-axis to the SVG
+svg.append("g")
+  .attr("id", "x-axis")
+  .attr("transform", `translate(0, ${height - margin.bottom})`) // Adjust positioning as needed
+  .call(xAxis);
