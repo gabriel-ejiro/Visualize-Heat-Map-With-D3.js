@@ -74,7 +74,7 @@ svg.selectAll(".cell")
   .attr("data-year", (d) => d.year) // Add data-year property
   .attr("data-temp", (d) => d.value); // Add data-temp property
 
-
+// user story 9, 10, 11
 // Define y-axis scale and axis generator
 const yScale = d3.scaleBand()
   .domain(months.map(d => d.month)) // Assuming 'months' is an array containing month names
@@ -101,3 +101,55 @@ svg.append("g")
   .attr("id", "x-axis")
   .attr("transform", `translate(0, ${height - margin.bottom})`) // Adjust positioning as needed
   .call(xAxis);
+
+// user story 12, 13, 14
+// Define x-axis scale and axis generator
+const xScale = d3.scaleBand()
+  .domain(years) // Assuming 'years' is an array containing all years
+  .range([margin.left, width - margin.right]); // Adjust range as needed
+
+const xAxis = d3.axisBottom(xScale)
+  .tickValues(years.filter(year => year % 10 === 0)); // Display tick labels for every 10 years
+
+// Append x-axis to the SVG
+svg.append("g")
+  .attr("id", "x-axis")
+  .attr("transform", `translate(0, ${height - margin.bottom})`) // Adjust positioning as needed
+  .call(xAxis)
+  .selectAll("text")
+  .style("text-anchor", "end")
+  .attr("dx", "-0.8em")
+  .attr("dy", "0.15em")
+  .attr("transform", "rotate(-65)");
+
+// Create legend
+const legend = svg.append("g")
+  .attr("id", "legend")
+  .attr("transform", `translate(${width - 120}, ${margin.top})`); // Adjust positioning as needed
+
+// Define legend data and colors
+const legendData = ["< 2.8", "2.8 - 3.9", "3.9 - 5.0", ">= 5.0"];
+const legendColors = ["#ffffcc", "#c2e699", "#78c679", "#238443"];
+
+// Append rect elements to the legend
+legend.selectAll(".legend-item")
+  .data(legendData)
+  .enter()
+  .append("rect")
+  .attr("class", "legend-item")
+  .attr("x", 0)
+  .attr("y", (d, i) => i * 20)
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", (d, i) => legendColors[i]);
+
+// Add text labels to the legend
+legend.selectAll("text")
+  .data(legendData)
+  .enter()
+  .append("text")
+  .attr("x", 24)
+  .attr("y", (d, i) => i * 20 + 9)
+  .attr("dy", "0.35em")
+  .text(d => d);
+
